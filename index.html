@@ -18,13 +18,28 @@
 
         <!-- ============= Menu inicial ================  -->
         <div id="tela-inicial" style="display: none;"> 
-            <button id="botIniciar">Iniciar</button>
-            <button id="botAdicionar">Adicionar nova palavra</button>
+            <button id="botIniciar" class="botAzul">Iniciar</button>
+            <button id="botAdicionar" class="botBranco">Adicionar nova palavra</button>
 
         </div>
 
          <!-- ============= Adição ================  -->
+        <div id="tela-adicionarPalavra">
+            <input id="palavraInput" placeholder="Digite uma palavra ou frase" type="text">
 
+            <div id="footerInput">
+                <div id="observacao">
+                    <img src="./src/info.svg">
+                    <span>Máx. de 8 letras</span>
+                </div>
+                <div class="botoes">
+                    <button id="botSalvarIniciar" class="botAzul botPadrao">Salvar e começar</button>
+                    <button id="botCancelar" class="botBranco botPadrao">Cancelar</button>
+                </div>
+            </div>
+        </div>
+
+         <!-- ============= Forca ================  -->
 
     </main>
     <script src="./script.js"></script>

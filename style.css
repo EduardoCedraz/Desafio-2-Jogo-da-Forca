@@ -2,7 +2,7 @@
     font-family: 'Nunito', sans-serif;
 }
 html, body,main{
-    height: 95%;
+    height: 99%;
 }
 body{
     background-color: #F3F5FC;
@@ -10,6 +10,19 @@ body{
 #logo{
     margin: 40px 0px 0px 84px;
 }
+
+.botAzul{
+    background-color: #0A3871;
+    color:#F0F0F0;
+    border:none;
+}
+
+.botBranco{
+    color:#0A3871;
+    border: solid 1px #0A3871;
+    background-color: #F0F0F0;
+}
+
 #tela-inicial{
     height: 100%;
     display: flex;
@@ -25,13 +38,37 @@ body{
 
 }
 #botIniciar{
-    background-color: #0A3871;
-    color:#F0F0F0;
-    border:none;
     margin-bottom: 1em;
 }
-#botAdicionar{
-    color:#0A3871;
-    border: solid 1px #0A3871;
-    background-color: #F0F0F0;
+#tela-adicionarPalavra{
+    height: 60%;
+    margin: 15% 15% 15% 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#palavraInput{
+    height: 3rem;
+    border:none;
+    padding: 0.1rem;
+    font-size: 2rem;
+
+}
+input:focus{outline: none;}
+
+#palavraInput::placeholder{
+    font-size: 2rem;
+    line-height: 3rem;
+    color: #0A3871;
+}
+
+.botPadrao{
+    margin-top: 1rem;
+    width: 20em;
+    height: 4.5em;
+    border-radius: 24px;
+}
+
+.botoes button:nth-child(1){
+    margin-right: 1rem;
 }
