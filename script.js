@@ -1,6 +1,6 @@
 function escolhaPalavra(lista){
     var aleatorio = Math.round(Math.random(lista.length))
-    var palavra = lista[aleatorio]
+    palavra = lista[aleatorio]
 
     var letras = []
 
@@ -10,41 +10,52 @@ function escolhaPalavra(lista){
 
     return letras
 }
-function escreverPalavra(){
-    pincelTab.font = "60px Verdana";
-    
-    pincelTab.strokeText(palavraEscolhida[0], 50,90)
-    pincelTab.strokeText(palavraEscolhida[1], 110,90)
-    pincelTab.strokeText(palavraEscolhida[2], 170,90)
-    pincelTab.strokeText(palavraEscolhida[3], 230,90)
-    pincelTab.strokeText(palavraEscolhida[4], 290,90)
-    pincelTab.strokeText(palavraEscolhida[5], 350,90)
-    pincelTab.strokeText(palavraEscolhida[6], 410,90)
 
-
+function validaTeclado(){
+    var tecla = (event.key).toUpperCase()
     
+    
+    for (i=0;i < palavraEscolhida.length;i++){
+        
+        if(tecla == palavraEscolhida[i]){
+            //pincelTab.strokeText(tecla,(50 + (palavraValidar.indexOf(tecla,i) * 60 ) ),90) Funciona
+
+            pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+
+        }
+    }
+
 
 }
+
 function desenhaTraçoTab(){
     var qtd = palavraEscolhida.length
     var pinXtab = 135;
     var pinYtab = 100;
+    constQtdTraco = 4
+
     //condição para deixar traços centralizados
     if(qtd == 5){
         pinXtab = 105;
         pinYtab = 100;
+        constQtdTraco = 3
+
     }
     else if(qtd == 6){
         pinXtab = 75;
         pinYtab = 100;
+        constQtdTraco = 2
+
     }
     else if(qtd == 7){
         pinXtab = 45;
         pinYtab = 100;
+        constQtdTraco = 1
     }
     else if(qtd == 8){
         pinXtab = 15;
         pinYtab = 100;
+        
     }
     //gerar traços a depender da quantidade de letra
     for(i=0; i < qtd;i++){
@@ -58,7 +69,11 @@ function desenhaTraçoTab(){
     }
 }
 //Config
-var listaPalavra =["ABACATE", "CURIOSO"];
+var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
+var cont = 0
+var contador=0
+var palavra = ""
+var constQtdTraco = 0
 
 // Forca
 var canvaForca = document.getElementById("forca");
@@ -71,10 +86,14 @@ var canvaTab= document.getElementById("tabuleiro");
 var pincelTab = canvaTab.getContext("2d");
 pincelTab.fillStyle = "#F0C0C0";
 pincelTab.fillRect(0, 0, 505, 200);
+pincelTab.font = "60px Verdana";
 
 //jogo
-var palavraEscolhida = escolhaPalavra(listaPalavra);
-escreverPalavra();
-desenhaTraçoTab(5);
+var palavraEscolhida = escolhaPalavra(listaPalavra); //palavra usada na função escrever Palavra
+var palavraValidar = palavraEscolhida
+desenhaTraçoTab();
+
+document.onkeydown = validaTeclado;
 
 
+console.log(palavraValidar);
