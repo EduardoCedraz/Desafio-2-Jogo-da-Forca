@@ -10,22 +10,34 @@ function escolhaPalavra(lista){
 
     return letras
 }
-
 function validaTeclado(){
     var tecla = (event.key).toUpperCase()
     
-    
-    for (i=0;i < palavraEscolhida.length;i++){
-        
-        if(tecla == palavraEscolhida[i]){
-            //pincelTab.strokeText(tecla,(50 + (palavraValidar.indexOf(tecla,i) * 60 ) ),90) Funciona
+    if (letrasCertas.includes(tecla) == false){
+        for (i=0;i < palavraEscolhida.length;i++){
+            
+            if(tecla == palavraEscolhida[i]){
+                
+                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+                letrasCertas.push(tecla)
+                
 
-            pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+            }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
+                    letrasErradas.push(tecla)
+                    
+            }
+
+            if(letrasInseridas.includes(tecla)==false){
+                letrasInseridas.push(tecla)
+                
+
+            }
 
         }
     }
-
-
+    pInserido.innerHTML= letrasInseridas + "<br>" + + "<span style='color:red'>" + letrasErradas + "</span>"
+    pInserido.innerHTML = letrasErradas
+    // colocar diferença de erro + contagem de erros limite
 }
 
 function desenhaTraçoTab(){
@@ -71,9 +83,11 @@ function desenhaTraçoTab(){
 //Config
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
 var cont = 0
-var contador=0
-var palavra = ""
+var letrasInseridas = []
+var letrasCertas = []
+var letrasErradas = []
 var constQtdTraco = 0
+
 
 // Forca
 var canvaForca = document.getElementById("forca");
@@ -87,13 +101,14 @@ var pincelTab = canvaTab.getContext("2d");
 pincelTab.fillStyle = "#F0C0C0";
 pincelTab.fillRect(0, 0, 505, 200);
 pincelTab.font = "60px Verdana";
+var pInserido = document.getElementById("inserido")
+var spanInsert = document.getElementById("spanInsert")
 
 //jogo
 var palavraEscolhida = escolhaPalavra(listaPalavra); //palavra usada na função escrever Palavra
-var palavraValidar = palavraEscolhida
 desenhaTraçoTab();
 
 document.onkeydown = validaTeclado;
+console.log(palavraEscolhida);
 
-
-console.log(palavraValidar);
+//FALTA IDENTIFICAÇÃO DAS LETRAS INSERIDAS E ERRADAS
