@@ -13,13 +13,13 @@ function escolhaPalavra(lista){
 function validaTeclado(){
     var tecla = (event.key).toUpperCase()
     
-    if (letrasCertas.includes(tecla) == false){
+    if (letrasInseridas.includes(tecla) == false){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
                 
                 pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
-                letrasCertas.push(tecla)
+                
                 
 
             }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
@@ -37,6 +37,7 @@ function validaTeclado(){
     }
     pInserido.innerHTML= letrasInseridas + "<br>" + + "<span style='color:red'>" + letrasErradas + "</span>"
     pInserido.innerHTML = letrasErradas
+
     // colocar diferença de erro + contagem de erros limite
 }
 
@@ -84,7 +85,6 @@ function desenhaTraçoTab(){
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
 var cont = 0
 var letrasInseridas = []
-var letrasCertas = []
 var letrasErradas = []
 var constQtdTraco = 0
 
