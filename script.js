@@ -1,5 +1,5 @@
 function escolhaPalavra(lista){
-    var aleatorio = Math.round(Math.random(lista.length))
+    var aleatorio = Math.round(Math.random() * lista.length)
     palavra = lista[aleatorio]
 
     var letras = []
@@ -17,7 +17,6 @@ function validaTeclado(){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
-                
                 pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 
                 
@@ -85,6 +84,7 @@ function desenhaTraçoTab(){
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
 var cont = 0
 var letrasInseridas = []
+var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWYZ'
 var letrasErradas = []
 var constQtdTraco = 0
 
