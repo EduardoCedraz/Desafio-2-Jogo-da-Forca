@@ -177,7 +177,6 @@ function resetar(){
     letrasErradas = []
     pincelForca.clearRect(0, 0, canvaForca.width, canvaForca.height);
     pincelTab.clearRect(0, 0, canvaTab.width, canvaTab.height);
-    console.log('limpoh')
     forcaInicio()
     palavraEscolhida = escolhaPalavra(listaPalavra)
     desenhaTraçoTab();
