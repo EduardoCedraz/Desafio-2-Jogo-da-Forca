@@ -50,6 +50,26 @@ function validaTeclado(){
 
     // colocar diferença de erro + contagem de erros limite
 }
+function forcaInicio(){
+    pincelForca.fillStyle = "#F0F0C0";
+    pincelForca.fillRect(0, 0, 505, 450);
+
+    //base Forca
+    pincelForca.beginPath();
+    pincelForca.fillStyle = "#FFCC00";
+    pincelForca.lineWidth = 3;
+    pincelForca.moveTo(100,400)
+    pincelForca.lineTo(300,400)
+
+    pincelForca.moveTo(130,400)
+    pincelForca.lineTo(130,80)
+
+    pincelForca.lineTo(280,80)
+    pincelForca.lineTo(280,120)
+
+    pincelForca.stroke()
+
+}
 function desenhaForca(){
 
 
@@ -148,6 +168,26 @@ function mostraTeclado(){
     }
 
 }
+function resetar(){
+    var teclasTeclado = document.querySelectorAll("#teclado button")
+    contErro = 0
+    contAcerto = 0
+    situacao =''
+    letrasInseridas = []
+    letrasErradas = []
+    pincelForca.clearRect(0, 0, canvaForca.width, canvaForca.height);
+    pincelTab.clearRect(0, 0, canvaTab.width, canvaTab.height);
+    console.log('limpoh')
+    forcaInicio()
+    palavraEscolhida = escolhaPalavra(listaPalavra)
+    desenhaTraçoTab();
+
+    for(i=0;i<teclasTeclado.length;i++){
+        teclasTeclado[i].style.backgroundColor='#2a5b96'
+    }
+
+
+}
 //Config 
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
 var contErro = 0
@@ -158,26 +198,14 @@ var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var letrasErradas = []
 var constQtdTraco = 0
 
+
+
+
 // Forca
 var canvaForca = document.getElementById("forca");
 var pincelForca = canvaForca.getContext("2d");
-pincelForca.fillStyle = "#F0F0C0";
-pincelForca.fillRect(0, 0, 505, 450);
 
-//base Forca
-pincelForca.beginPath();
-pincelForca.fillStyle = "#FFCC00";
-pincelForca.lineWidth = 3;
-pincelForca.moveTo(100,400)
-pincelForca.lineTo(300,400)
-
-pincelForca.moveTo(130,400)
-pincelForca.lineTo(130,80)
-
-pincelForca.lineTo(280,80)
-pincelForca.lineTo(280,120)
-
-pincelForca.stroke()
+forcaInicio()
 
 //Tabuleiro
 var canvaTab= document.getElementById("tabuleiro");
@@ -185,6 +213,7 @@ var pincelTab = canvaTab.getContext("2d");
 pincelTab.fillStyle = "#F0C0C0";
 pincelTab.fillRect(0, 0, 505, 200);
 pincelTab.font = "60px Arial";
+
 var pInserido = document.getElementById("inserido")
 var spanInsert = document.getElementById("spanInsert")
 
