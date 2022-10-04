@@ -13,7 +13,7 @@ function escolhaPalavra(lista){
 function validaTeclado(){
     var tecla = (event.key).toUpperCase()
     
-    if (letrasInseridas.includes(tecla) == false){
+    if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
