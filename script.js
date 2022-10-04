@@ -140,41 +140,44 @@ function desenhaTraçoTab(){
         pinXtab+=60
     }
 }
+function mostraTeclado(){
+    if ( teclado.style.display == 'none'){
+        teclado.style.display = 'flex'
+    }else{
+        teclado.style.display = 'none'
+    }
+
+}
 //Config 
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
 var contErro = 0
 var contAcerto = 0
 var situacao =''
 var letrasInseridas = []
-var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWYZ'
+var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var letrasErradas = []
 var constQtdTraco = 0
-
-
 
 // Forca
 var canvaForca = document.getElementById("forca");
 var pincelForca = canvaForca.getContext("2d");
 pincelForca.fillStyle = "#F0F0C0";
 pincelForca.fillRect(0, 0, 505, 450);
-    //base Forca
-    pincelForca.beginPath();
-    pincelForca.fillStyle = "#FFCC00";
-    pincelForca.lineWidth = 3;
-    pincelForca.moveTo(100,400)
-    pincelForca.lineTo(300,400)
 
-    pincelForca.moveTo(130,400)
-    pincelForca.lineTo(130,80)
+//base Forca
+pincelForca.beginPath();
+pincelForca.fillStyle = "#FFCC00";
+pincelForca.lineWidth = 3;
+pincelForca.moveTo(100,400)
+pincelForca.lineTo(300,400)
 
-    pincelForca.lineTo(280,80)
-    pincelForca.lineTo(280,120)
+pincelForca.moveTo(130,400)
+pincelForca.lineTo(130,80)
 
-    pincelForca.stroke()
+pincelForca.lineTo(280,80)
+pincelForca.lineTo(280,120)
 
-
-    
-
+pincelForca.stroke()
 
 //Tabuleiro
 var canvaTab= document.getElementById("tabuleiro");
@@ -190,6 +193,61 @@ var palavraEscolhida = escolhaPalavra(listaPalavra); //palavra usada na função
 desenhaTraçoTab();
 
 document.onkeydown = validaTeclado;
+
 console.log(palavraEscolhida);
 
-//FALTA IDENTIFICAÇÃO DAS LETRAS INSERIDAS E ERRADAS
+//Teclado Improvisado ( Perguntar No forum como puxar o clique das teclas do teclado virtual e usar como variavel na função validaTeclado() )
+var teclado = document.getElementById("teclado")
+
+//Config Teclado Virtual
+if(window.matchMedia("(min-width:768px)").matches){
+    teclado.style.display = 'none'
+}else if(window.matchMedia("(max-width:767px)").matches){
+    teclado.style.display = 'flex'
+}
+
+//função teclado virtual
+teclado.addEventListener("click", function(event) {
+    //mesma função valida teclado
+    var teclaVirtu = event.target.value
+    var tecla = teclaVirtu.toUpperCase()
+    console.log(teclaVirtu)
+     // este é o elemento clicado
+     if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao ==''){
+        for (i=0;i < palavraEscolhida.length;i++){
+            
+            if(tecla == palavraEscolhida[i]){
+                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+                contAcerto+=1
+                event.target.style.backgroundColor  = 'green'
+
+                    if(contAcerto ==palavraEscolhida.length){
+                        pincelForca.strokeStyle = "green";
+                        situacao = "Voce Ganhou"
+                    }
+                
+
+            }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
+                    letrasErradas.push(tecla)
+                    contErro+=1
+                    desenhaForca()
+                    event.target.style.backgroundColor  = 'rgb(195, 11, 11)'
+            }
+
+            else if(letrasInseridas.includes(tecla)==false){
+                letrasInseridas.push(tecla)
+                
+
+            }
+            else if (contErro == 6 || situacao == 'Voce Ganhou' ){
+                break
+            }
+        }
+        console.log(contErro,contAcerto)
+        pincelForca.font = "40px Arial";
+        pincelForca.strokeText(situacao, 150,50)
+    }
+
+    pInserido.innerHTML = letrasErradas
+    
+})

@@ -1,26 +1,44 @@
 *{
     font-family: 'Nunito', sans-serif;
+    box-sizing: border-box;
 }
-html, body,main{
-    height: 99%;
+html, body {
+    min-height: 100%;
 }
 body{
     background-color: #F3F5FC;
 }
-#logo{
-    margin: 40px 0px 0px 84px;
+main{
+    display: flex;
+    flex-direction: column;
+}
+header{
+    
+    display: flex;
+    margin: 20px 60px 0px 60px;
+    justify-content: space-between;
+    align-items:center ;
+    margin-bottom: 40px;
+    
+}
+header>button{
+    height: 2.5rem; 
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .botAzul{
     background-color: #0A3871;
     color:#F0F0F0;
     border:none;
+    border-radius: 10px;
 }
 
 .botBranco{
     color:#0A3871;
-    border: solid 1px #0A3871;
+    border: solid 2px #0A3871;
     background-color: #F0F0F0;
+    border-radius: 10px;
 }
 
 #tela-inicial{
@@ -76,8 +94,69 @@ input:focus{outline: none;}
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 #inserido{
     font-size: 2rem;
     letter-spacing: 0.5rem;
 }
+
+#teclado{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    z-index: 2;
+    
+}
+#teclado div {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    justify-content: center;
+}
+#teclado button{
+    width: 50px;
+    height: 50px;
+    padding: 0;
+
+    border:none;
+    background-color: #2a5b96;
+    color:white;
+    margin: 1px;
+    border-radius: 10px;
+
+}
+#teclado button:active{
+    background-color: #cce0f8;
+    color:rgb(44, 44, 44);
+}
+#mostraTeclado{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border: none;
+    background: none;
+}
+button svg{
+    width: 50px;
+    fill: #2a5b96;
+}
+button svg:hover path{
+    fill: #90b1d8;
+}
+
+@media only screen and (max-width:767px) {
+    
+    #tela-forca {
+        scale: 0.8;
+    }
+
+    #inserido{
+        display: none;
+    }
+   header{
+        margin: 10px 20px 0px 20px;
+    }
+    
+  }
