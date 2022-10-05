@@ -36,7 +36,10 @@ header>div>button{
     font-weight: bold;
     padding: 0px 1rem 0px 1rem;
 }
-
+#qtdPalavra{
+    padding: 5px;
+    border-radius: 25px;
+}
 .botAzul{
     background-color: #0A3871;
     color:#F0F0F0;

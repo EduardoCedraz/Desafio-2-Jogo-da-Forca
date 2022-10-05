@@ -11,6 +11,12 @@ var telaAdcPalavra = document.getElementById("tela-adicionarPalavra")
 var telaForca = document.getElementById("tela-forca")
 
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
+var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+var vitorias = 0;
+var qtdPalavraBloco = document.getElementById("qtdPalavra")
+qtdPalavraBloco.innerHTML = `${vitorias} / ${listaPalavra.length}`
+
 
 //input
 var inputPalavra = document.getElementById("palavraInput")
@@ -25,12 +31,31 @@ botaoVoltar.style.display = 'none'
 function addPalavra(){
     var inputPalavra = document.getElementById("palavraInput").value.toUpperCase()
     
+    let contValidar = 0
+    let inputDesmembrado = []
 
-    if(inputPalavra.includes(listaPalavra) == false){
-        listaPalavra.push(inputPalavra)
-        console.log(listaPalavra)
+    for(i=0;i<inputPalavra.length;i++){
+
+        inputDesmembrado.push(inputPalavra[i])
+
+        if(letrasValidas.includes(inputPalavra[i]) == true){
+            contValidar+=1
+        }
     }
+
+    if(listaPalavra.includes(inputPalavra) == false && inputPalavra !='' && contValidar == inputPalavra.length){
+
+        listaPalavra.push(inputPalavra)
+        document.getElementById("palavraInput").value = ''
+        console.log(listaPalavra)
+        console.log(inputPalavra)
+
+    }
+    qtdPalavraBloco.innerHTML = `${vitorias} / ${listaPalavra.length}`
+    
 }
+
+
 function mudaForca(){
     telaInicial.style.display = 'none'
     telaForca.style.display = ''
@@ -101,36 +126,33 @@ function validaTeclado(){
 
                 pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 contAcerto+=1
-                atualizaTecladoVirtual('green')
-                    for (i=0;i < teclasTeclado.length;i++){
-                        if(teclasTeclado[i].value == tecSele){
-                            teclasTeclado[i].style.backgroundColor = 'green'
-                        }else{
-                            
+        
+                   
+                for (c=0;c < teclasTeclado.length;c++){
+                    if(teclasTeclado[c].value == tecSele){
+                        teclasTeclado[c].style.backgroundColor = 'green'
                         }
-                    }
+                }
 
-
-                    if(contAcerto >palavraEscolhida.length){
+                    if(contAcerto == palavraEscolhida.length){
                         pincelForca.strokeStyle = "green";
                         situacao = "Voce Ganhou"
-                          
+                        mudarCorTeclas('green')
+                        
                     }
                 
+                    
 
             }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
                     letrasErradas.push(tecla)
                     contErro+=1
                     desenhaForca()
-                    for (i=0;i < teclasTeclado.length;i++){
-                        if(teclasTeclado[i].value == tecSele){
-                            teclasTeclado[i].style.backgroundColor = 'rgb(195, 11, 11)'
-                        }else{
-                            
+
+                    for (z=0;z < teclasTeclado.length;z++){
+                        if(teclasTeclado[z].value == tecSele){
+                            teclasTeclado[z].style.backgroundColor = 'rgb(195, 11, 11)'
                         }
                     }
-
-                    
             }
 
             else if(letrasInseridas.includes(tecla)==false){
@@ -154,10 +176,6 @@ function validaTeclado(){
     pInserido.innerHTML = letrasErradas
 
     // colocar diferença de erro + contagem de erros limite
-}
-function atualizaTecladoVirtual(){
-    var tecla = (event.key).toUpperCase()
-    console.log(tecla)
 }
 function forcaInicio(){
     pincelForca.strokeStyle = "#194881"
@@ -308,7 +326,6 @@ var contErro = 0
 var contAcerto = 0
 var situacao =''
 var letrasInseridas = []
-var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var letrasErradas = []
 var constQtdTraco = 0
 
@@ -357,7 +374,8 @@ teclado.addEventListener("click", function(event) {
     var tecla = teclaVirtu.toUpperCase()
     console.log(teclaVirtu)
      // este é o elemento clicado
-     if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao ==''){
+
+     if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao =='' && telaForca.style.display == ''){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
