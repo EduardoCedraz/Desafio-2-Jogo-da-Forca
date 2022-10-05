@@ -11,7 +11,6 @@ function escolhaPalavra(lista){
     return letras
 }
 function mudarCorTeclas(cor){
-var teclasTeclado = document.querySelectorAll("#teclado button")
 
     for(i=0;i<teclasTeclado.length;i++){
         teclasTeclado[i].style.backgroundColor=cor
@@ -19,6 +18,7 @@ var teclasTeclado = document.querySelectorAll("#teclado button")
 }
 function validaTeclado(){
     var tecla = (event.key).toUpperCase()
+    var tecSele = (event.key).toLowerCase()
     
     if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao ==''){
         for (i=0;i < palavraEscolhida.length;i++){
@@ -29,10 +29,20 @@ function validaTeclado(){
 
                 pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 contAcerto+=1
+                atualizaTecladoVirtual('green')
+                    for (i=0;i < teclasTeclado.length;i++){
+                        if(teclasTeclado[i].value == tecSele){
+                            teclasTeclado[i].style.backgroundColor = 'green'
+                        }else{
+                            
+                        }
+                    }
+
+
                     if(contAcerto >palavraEscolhida.length){
                         pincelForca.strokeStyle = "green";
                         situacao = "Voce Ganhou"
-                        
+                          
                     }
                 
 
@@ -40,6 +50,14 @@ function validaTeclado(){
                     letrasErradas.push(tecla)
                     contErro+=1
                     desenhaForca()
+                    for (i=0;i < teclasTeclado.length;i++){
+                        if(teclasTeclado[i].value == tecSele){
+                            teclasTeclado[i].style.backgroundColor = 'rgb(195, 11, 11)'
+                        }else{
+                            
+                        }
+                    }
+
                     
             }
 
@@ -53,6 +71,7 @@ function validaTeclado(){
                 break
             }
         }
+        
         console.log(contErro,contAcerto)
         pincelForca.font = "40px Arial";
         pincelForca.strokeText(situacao, 150,50)
@@ -63,6 +82,10 @@ function validaTeclado(){
     pInserido.innerHTML = letrasErradas
 
     // colocar diferença de erro + contagem de erros limite
+}
+function atualizaTecladoVirtual(){
+    var tecla = (event.key).toUpperCase()
+    console.log(tecla)
 }
 function forcaInicio(){
     pincelForca.strokeStyle = "#194881"
@@ -248,6 +271,8 @@ console.log(palavraEscolhida);
 var teclado = document.getElementById("teclado")
 
 //Config Teclado Virtual
+var teclasTeclado = document.querySelectorAll("#teclado button")
+
 if(window.matchMedia("(min-width:768px)").matches){
     teclado.style.display = 'none'
 }else if(window.matchMedia("(max-width:767px)").matches){
