@@ -10,6 +10,13 @@ function escolhaPalavra(lista){
 
     return letras
 }
+function mudarCorTeclas(cor){
+var teclasTeclado = document.querySelectorAll("#teclado button")
+
+    for(i=0;i<teclasTeclado.length;i++){
+        teclasTeclado[i].style.backgroundColor=cor
+    }
+}
 function validaTeclado(){
     var tecla = (event.key).toUpperCase()
     
@@ -17,11 +24,15 @@ function validaTeclado(){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
+
+                
+
                 pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 contAcerto+=1
-                    if(contAcerto ==palavraEscolhida.length){
+                    if(contAcerto >palavraEscolhida.length){
                         pincelForca.strokeStyle = "green";
                         situacao = "Voce Ganhou"
+                        
                     }
                 
 
@@ -38,12 +49,15 @@ function validaTeclado(){
 
             }
             else if (contErro == 6 || situacao == 'Voce Ganhou' ){
+                
                 break
             }
         }
         console.log(contErro,contAcerto)
         pincelForca.font = "40px Arial";
         pincelForca.strokeText(situacao, 150,50)
+        
+        
     }
 
     pInserido.innerHTML = letrasErradas
@@ -51,8 +65,7 @@ function validaTeclado(){
     // colocar diferença de erro + contagem de erros limite
 }
 function forcaInicio(){
-    pincelForca.fillStyle = "#F0F0C0";
-    pincelForca.fillRect(0, 0, 505, 450);
+    pincelForca.strokeStyle = "#194881"
 
     //base Forca
     pincelForca.beginPath();
@@ -71,7 +84,7 @@ function forcaInicio(){
 
 }
 function desenhaForca(){
-
+ pincelForca.strokeStyle = "black"
 
 if(contErro == 1){
     //cabeça
@@ -116,6 +129,7 @@ else if(contErro == 6){
     pincelForca.stroke()
     pincelForca.strokeStyle = "red";
     situacao = 'Voce Perdeu'
+    mudarCorTeclas('rgb(195, 11, 11)')
 }
 
 }
@@ -124,7 +138,7 @@ function desenhaTraçoTab(){
     var pinXtab = 135;
     var pinYtab = 100;
     constQtdTraco = 4
-
+    pincelTab.strokeStyle ="black"
     //condição para deixar traços centralizados
     if(qtd == 5){
         pinXtab = 105;
@@ -168,8 +182,13 @@ function mostraTeclado(){
     }
 
 }
+function verificaAcerto(){
+    if(contAcerto > palavraEscolhida.length - 1){
+        mudarCorTeclas('green')
+    }
+}
 function resetar(){
-    var teclasTeclado = document.querySelectorAll("#teclado button")
+  
     contErro = 0
     contAcerto = 0
     situacao =''
@@ -177,13 +196,13 @@ function resetar(){
     letrasErradas = []
     pincelForca.clearRect(0, 0, canvaForca.width, canvaForca.height);
     pincelTab.clearRect(0, 0, canvaTab.width, canvaTab.height);
+    pincelForca.strokeStyle = '#194881'
+    
     forcaInicio()
     palavraEscolhida = escolhaPalavra(listaPalavra)
     desenhaTraçoTab();
 
-    for(i=0;i<teclasTeclado.length;i++){
-        teclasTeclado[i].style.backgroundColor='#2a5b96'
-    }
+    mudarCorTeclas('#194881')
 
 
 }
@@ -209,8 +228,8 @@ forcaInicio()
 //Tabuleiro
 var canvaTab= document.getElementById("tabuleiro");
 var pincelTab = canvaTab.getContext("2d");
-pincelTab.fillStyle = "#F0C0C0";
-pincelTab.fillRect(0, 0, 505, 200);
+
+
 pincelTab.font = "60px Arial";
 
 var pInserido = document.getElementById("inserido")
@@ -221,6 +240,7 @@ var palavraEscolhida = escolhaPalavra(listaPalavra); //palavra usada na função
 desenhaTraçoTab();
 
 document.onkeydown = validaTeclado;
+document.onclick = verificaAcerto;
 
 console.log(palavraEscolhida);
 
