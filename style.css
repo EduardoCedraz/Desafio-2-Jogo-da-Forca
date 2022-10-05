@@ -1,9 +1,13 @@
 *{
     font-family: 'Nunito', sans-serif;
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 html, body {
-    min-height: 100%;
+    min-height: 100% !important;
+    height: 100%;
+    
 }
 body{
     background-color: #F3F5FC;
@@ -11,38 +15,52 @@ body{
 main{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    height: 88%;
+    
+    
 }
 header{
     
     display: flex;
-    margin: 20px 60px 0px 60px;
+    margin: 0px 60px 0px 60px;
     justify-content: space-between;
     align-items:center ;
-    margin-bottom: 40px;
+    height: 12%;
+    
     
 }
-header>button{
+header>div>button{
     height: 2.5rem; 
     font-size: 16px;
     font-weight: bold;
+    padding: 0px 1rem 0px 1rem;
 }
 
 .botAzul{
     background-color: #0A3871;
     color:#F0F0F0;
     border:none;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .botBranco{
     color:#0A3871;
     border: solid 2px #0A3871;
     background-color: #F0F0F0;
-    border-radius: 10px;
+    border-radius: 20px;
 }
-
+.botoes{
+    display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap:15px;
+}
+#observacao{
+    margin-bottom: 10px;
+}
 #tela-inicial{
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -59,8 +77,8 @@ header>button{
     margin-bottom: 1em;
 }
 #tela-adicionarPalavra{
-    height: 50%;
-    margin: 15% 15% 20% 25%;
+    height: 100%;
+    margin: 15% auto 20% auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -70,6 +88,7 @@ header>button{
     border:none;
     padding: 0.1rem;
     font-size: 2rem;
+    background:none;
 
 }
 input:focus{outline: none;}
@@ -81,24 +100,29 @@ input:focus{outline: none;}
 }
 
 .botPadrao{
-    margin-top: 1rem;
     width: 20em;
     height: 4.5em;
     border-radius: 24px;
-}
-
-.botoes button:nth-child(1){
-    margin-right: 1rem;
 }
 #tela-forca{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: 100%;
+}
+#painelForca{
+    display: grid;
+        grid-template-columns: 1fr 1fr ;
+        grid-template-rows: 2fr;
+    
+    align-items: center;
+    justify-content: center;
 }
 #inserido{
     font-size: 2rem;
     letter-spacing: 0.5rem;
+    text-align: center;
 }
 
 #teclado{
@@ -132,9 +156,7 @@ input:focus{outline: none;}
     color:rgb(44, 44, 44);
 }
 #mostraTeclado{
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
+    margin:40px auto 10px auto;
     border: none;
     background: none;
 }
@@ -146,10 +168,16 @@ button svg:hover path{
     fill: #90b1d8;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:1023px) {
     
-    #tela-forca {
+    #painelForca {
+        display: flex;
+        flex-direction: column;
         scale: 0.8;
+        margin-top: -40px;
+    }
+    #mostraTeclado{
+        margin-top: -40px;
     }
 
     #inserido{
@@ -158,5 +186,18 @@ button svg:hover path{
    header{
         margin: 10px 20px 0px 20px;
     }
-    
   }
+  @media only screen and (max-width:768px) {
+    .botoes{    
+        flex-direction: column;
+        gap:10px;
+        }
+        #tela-adicionarPalavra {
+            width: 90%;
+        }
+    .botPadrao{
+        width: 100%;
+    }
+    }
+  
+ 

@@ -13,23 +13,27 @@
 
 
 <body>
+    <header>
+        <img id="logo" src="./src/logo.svg">
+        <div>
+        <button class="botBranco" id="botVoltar" onclick=" voltar()">Voltar</button>
+        <button class="botAzul " id="botReiniciar" onclick=" resetar()">Reiniciar</button>
+         </div>
+    </header>
     <main>
-        <header>
-            <img id="logo" src="./src/logo.svg">
-            <button class="botBranco" onclick=" resetar()">Reiniciar</button>
-        </header>
+        
         
 
         <!-- ============= Menu inicial ================  -->
-        <div id="tela-inicial" style="display: none;"> 
+        <div id="tela-inicial"> 
             <button id="botIniciar" class="botAzul">Iniciar</button>
             <button id="botAdicionar" class="botBranco">Adicionar nova palavra</button>
 
         </div>
 
          <!-- ============= Adição ================  -->
-        <div id="tela-adicionarPalavra" style="display: none;">
-            <input id="palavraInput" placeholder="Digite uma palavra ou frase" type="text">
+        <div id="tela-adicionarPalavra" class="esconde-tela">
+            <input id="palavraInput" placeholder="Digite uma palavra" type="text"  maxLength="8">
 
             <div id="footerInput">
                 <div id="observacao">
@@ -37,20 +41,21 @@
                     <span>Máx. de 8 letras</span>
                 </div>
                 <div class="botoes">
-                    <button id="botSalvarIniciar" class="botAzul botPadrao">Salvar e começar</button>
-                    <button id="botCancelar" class="botBranco botPadrao">Cancelar</button>
+                    <button id="botSalvarIniciar" class="botAzul botPadrao" onclick=" addPalavra()">Salvar e começar</button>
+                    <button id="botCancelar" class="botBranco botPadrao" onclick=" voltar()">Cancelar</button>
                 </div>
             </div>
         </div>
 
          <!-- ============= Forca ================  -->
-         <div id="tela-forca">
-            <canvas id="forca" width="505" height="450"></canvas>
+         <section id="tela-forca">
+         <div id="painelForca">
+            <canvas id="forca" width="505" height="410"></canvas>
             <canvas id="tabuleiro" width="505" height="150"></canvas>
 
             <p id="inserido">
-                
             </p>
+            <div></div>
         </div>
 
         <!--========== Teclado ======   ==========-->
@@ -131,7 +136,7 @@
                     <button type="button" class="teclasTeclado" value="m">M</button>
             </div>
     </div>
-    
+    </section>
     </main>
     <script src="./script.js"></script>
 

@@ -1,3 +1,75 @@
+//botoes
+var botaoIniciar = document.getElementById("botIniciar")
+var botaoAdcPalavras = document.getElementById("botAdicionar")
+var botaoVoltar = document.getElementById("botVoltar")
+var botaoReiniciar = document.getElementById("botReiniciar")
+var salvarPalavra = document.getElementById("botSalvarIniciar")
+var botaoCancelar = document.getElementById("botCancelar")
+//telas
+var telaInicial = document.getElementById("tela-inicial")
+var telaAdcPalavra = document.getElementById("tela-adicionarPalavra")
+var telaForca = document.getElementById("tela-forca")
+
+var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
+
+//input
+var inputPalavra = document.getElementById("palavraInput")
+var palavraAdd = inputPalavra.value
+
+telaInicial.style.display = ''
+telaAdcPalavra.style.display = 'none'
+telaForca.style.display = 'none'
+botaoReiniciar.style.display = 'none'
+botaoVoltar.style.display = 'none'
+
+function addPalavra(){
+    var inputPalavra = document.getElementById("palavraInput").value.toUpperCase()
+    
+
+    if(inputPalavra.includes(listaPalavra) == false){
+        listaPalavra.push(inputPalavra)
+        console.log(listaPalavra)
+    }
+}
+function mudaForca(){
+    telaInicial.style.display = 'none'
+    telaForca.style.display = ''
+    botaoVoltar.style.display = ''
+    botaoReiniciar.style.display = ''
+
+}
+function mudaTelaAdc(){
+    telaInicial.style.display = 'none'
+    telaAdcPalavra.style.display = ''
+    botaoVoltar.style.display = 'none'
+}
+function mudarTelaInicio(){
+    telaInicial.style.display = ''
+    telaAdcPalavra.style.display = 'none'
+    telaForca.style.display = 'none'
+    botaoVoltar.style.display = 'none'
+    botaoReiniciar.style.display = 'none'
+
+}
+
+function voltar(){
+    if(telaAdcPalavra.style.display == ''){
+        mudarTelaInicio()
+    }else if (telaForca.style.display == ''){
+        mudarTelaInicio()
+    }
+}
+
+
+
+botaoIniciar.addEventListener('click', function() {
+    mudaForca()
+})
+botaoAdcPalavras.addEventListener('click', function() {
+    mudaTelaAdc()
+    
+})
+
 function escolhaPalavra(lista){
     var aleatorio = Math.round(Math.random() * (lista.length - 1))
     palavra = lista[aleatorio]
@@ -20,7 +92,7 @@ function validaTeclado(){
     var tecla = (event.key).toUpperCase()
     var tecSele = (event.key).toLowerCase()
     
-    if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao ==''){
+    if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao =='' && telaForca.style.display == ''){
         for (i=0;i < palavraEscolhida.length;i++){
             
             if(tecla == palavraEscolhida[i]){
@@ -215,6 +287,7 @@ function resetar(){
     contErro = 0
     contAcerto = 0
     situacao =''
+    pInserido.innerHTML =''
     letrasInseridas = []
     letrasErradas = []
     pincelForca.clearRect(0, 0, canvaForca.width, canvaForca.height);
@@ -230,7 +303,7 @@ function resetar(){
 
 }
 //Config 
-var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
+
 var contErro = 0
 var contAcerto = 0
 var situacao =''
@@ -238,8 +311,6 @@ var letrasInseridas = []
 var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 var letrasErradas = []
 var constQtdTraco = 0
-
-
 
 
 // Forca
