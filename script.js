@@ -11,11 +11,14 @@ var telaAdcPalavra = document.getElementById("tela-adicionarPalavra")
 var telaForca = document.getElementById("tela-forca")
 
 var listaPalavra =["CUIDADO","ABOBORA","CAIR","FONTE","RETARDAR"];
+var numeros =[]
+var todasPalavrasJogadas = false 
+var qtdPalavraTotal = listaPalavra.length
 var letrasValidas='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 var vitorias = 0;
 var qtdPalavraBloco = document.getElementById("qtdPalavra")
-qtdPalavraBloco.innerHTML = `${vitorias} / ${listaPalavra.length}`
+qtdPalavraBloco.innerHTML = `${vitorias} / ${qtdPalavraTotal}`
 
 
 //input
@@ -94,18 +97,34 @@ botaoAdcPalavras.addEventListener('click', function() {
     mudaTelaAdc()
     
 })
+function sorteiaNum(){
+    var aleatorio = Math.round(Math.random() * (listaPalavra.length - 1))
 
+    if(numeros.length >= listaPalavra.length){
+        alert("adicione mais palavras, ja jogou com todas")
+        todasPalavrasJogadas = true
+    }else{
+        while(numeros.includes(aleatorio)){
+            aleatorio = Math.round(Math.random() * (listaPalavra.length - 1))
+            }
+    }
+     
+     return aleatorio
+}
 function escolhaPalavra(lista){
-    var aleatorio = Math.round(Math.random() * (lista.length - 1))
-    palavra = lista[aleatorio]
+    var numeroSorteado = sorteiaNum()
+    if(todasPalavrasJogadas==false){
+     palavra = lista[numeroSorteado]
 
     var letras = []
 
     for (i=0;i<palavra.length;i++){
         letras.push(palavra[i])
     }
-
-    return letras
+    console.log(palavra)
+    
+}
+    return [letras, numeroSorteado]
 }
 function mudarCorTeclas(cor){
 
@@ -118,13 +137,13 @@ function validaTeclado(){
     var tecSele = (event.key).toLowerCase()
     
     if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao =='' && telaForca.style.display == ''){
-        for (i=0;i < palavraEscolhida.length;i++){
+        for (i=0;i < letraEscolhida.length;i++){
             
-            if(tecla == palavraEscolhida[i]){
+            if(tecla == letraEscolhida[i]){
 
                 
 
-                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (letraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 contAcerto+=1
         
                    
@@ -134,16 +153,15 @@ function validaTeclado(){
                         }
                 }
 
-                    if(contAcerto == palavraEscolhida.length){
+                    if(contAcerto == letraEscolhida.length){
                         pincelForca.strokeStyle = "green";
                         situacao = "Voce Ganhou"
-                        mudarCorTeclas('green')
-                        
+                        verificaAcerto()
                     }
                 
                     
 
-            }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
+            }else if(letraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
                     letrasErradas.push(tecla)
                     contErro+=1
                     desenhaForca()
@@ -247,7 +265,7 @@ else if(contErro == 6){
 
 }
 function desenhaTraçoTab(){
-    var qtd = palavraEscolhida.length
+    var qtd = letraEscolhida.length
     var pinXtab = 135;
     var pinYtab = 100;
     constQtdTraco = 4
@@ -296,8 +314,14 @@ function mostraTeclado(){
 
 }
 function verificaAcerto(){
-    if(contAcerto > palavraEscolhida.length - 1){
+    if(contAcerto == letraEscolhida.length ){
         mudarCorTeclas('green')
+        if(numeros.length != listaPalavra.length){
+            vitorias+=1
+         }   
+        qtdPalavraBloco.innerHTML = `${vitorias} / ${qtdPalavraTotal}`
+        contAcerto=0
+        numeros.push(palavraEscolhida[1])
     }
 }
 function resetar(){
@@ -314,6 +338,7 @@ function resetar(){
     
     forcaInicio()
     palavraEscolhida = escolhaPalavra(listaPalavra)
+    letraEscolhida = palavraEscolhida[0]
     desenhaTraçoTab();
 
     mudarCorTeclas('#194881')
@@ -347,13 +372,14 @@ var pInserido = document.getElementById("inserido")
 var spanInsert = document.getElementById("spanInsert")
 
 //jogo
-var palavraEscolhida = escolhaPalavra(listaPalavra); //palavra usada na função escrever Palavra
+var palavraEscolhida = escolhaPalavra(listaPalavra)
+var letraEscolhida = palavraEscolhida[0]; //palavra usada na função escrever Palavra
 desenhaTraçoTab();
 
 document.onkeydown = validaTeclado;
 document.onclick = verificaAcerto;
 
-console.log(palavraEscolhida);
+console.log(letraEscolhida);
 
 //Teclado Improvisado ( Perguntar No forum como puxar o clique das teclas do teclado virtual e usar como variavel na função validaTeclado() )
 var teclado = document.getElementById("teclado")
@@ -376,20 +402,20 @@ teclado.addEventListener("click", function(event) {
      // este é o elemento clicado
 
      if (letrasValidas.includes(tecla) && letrasInseridas.includes(tecla) == false && situacao =='' && telaForca.style.display == ''){
-        for (i=0;i < palavraEscolhida.length;i++){
+        for (i=0;i < letraEscolhida.length;i++){
             
-            if(tecla == palavraEscolhida[i]){
-                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (palavraEscolhida.indexOf(tecla,i) * 60 ) ),90)
+            if(tecla == letraEscolhida[i]){
+                pincelTab.strokeText(tecla,((20 + (30*constQtdTraco) ) + (letraEscolhida.indexOf(tecla,i) * 60 ) ),90)
                 contAcerto+=1
                 event.target.style.backgroundColor  = 'green'
 
-                    if(contAcerto ==palavraEscolhida.length){
+                    if(contAcerto ==letraEscolhida.length){
                         pincelForca.strokeStyle = "green";
                         situacao = "Voce Ganhou"
                     }
                 
 
-            }else if(palavraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
+            }else if(letraEscolhida.includes(tecla) ==false && letrasErradas.includes(tecla)==false){
                     letrasErradas.push(tecla)
                     contErro+=1
                     desenhaForca()
